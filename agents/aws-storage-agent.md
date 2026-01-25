@@ -26,9 +26,9 @@ Manages secure storage and retrieval of deployment artifacts, secrets, and uploa
 ## Authentication
 - AWS IAM credentials (Access Key ID and Secret Access Key)
 - IAM Policy permissions:
-  - `s3:GetObject` (deployment-assets/*)
-  - `s3:ListBucket` (deployment-assets)
-  - `s3:PutObject` (deployment-assets/*)
+  - `s3:GetObject` (react-to-app/*)
+  - `s3:ListBucket` (react-to-app)
+  - `s3:PutObject` (react-to-app/*)
   - `secretsmanager:GetSecretValue` (prod/auto-deployer/*)
 
 ## Stored Secrets
@@ -43,7 +43,7 @@ Manages secure storage and retrieval of deployment artifacts, secrets, and uploa
 - Manages temporary artifact storage
 
 ## S3 Bucket
-- Name: deployment-assets
+- Name: react-to-app
 - Contains: source zips, deployment configs, temporary files
 
 ## Secrets Manager

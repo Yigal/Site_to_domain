@@ -461,7 +461,7 @@ curl -X GET http://localhost:8000/health
     {
       "Effect": "Allow",
       "Action": ["s3:GetObject", "s3:PutObject", "s3:ListBucket"],
-      "Resource": ["arn:aws:s3:::deployment-assets", "arn:aws:s3:::deployment-assets/*"]
+      "Resource": ["arn:aws:s3:::react-to-app", "arn:aws:s3:::react-to-app/*"]
     },
     {
       "Effect": "Allow",
@@ -530,7 +530,7 @@ AWS_SECRET_ACCESS_KEY=...
 AWS_REGION=us-east-1
 
 # Resource Configuration
-S3_BUCKET=deployment-assets
+S3_BUCKET=react-to-app
 SECRET_NAME=prod/auto-deployer/keys
 
 # Task Queue

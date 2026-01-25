@@ -27,9 +27,9 @@ This plan is designed for a **Semi-Autonomous Browser Script** (like a Python Se
 **2. S3 Bucket Creation**
 
 * **🤖 Browser Action:** Navigates to `https://s3.console.aws.amazon.com/s3/bucket/create`
-* **🤖 Browser Action:** Fills `Bucket name` with `deployment-assets`.
+* **🤖 Browser Action:** Fills `Bucket name` with `react-to-app`.
 * **👤 User Prompt:**
-> "I've filled in the bucket name 'deployment-assets'.
+> "I've filled in the bucket name 'react-to-app'.
 > **Action Required:** Please scroll down and verify 'Block all Public Access' is checked.
 > Then click **'Create bucket'** manually to confirm. Press **ENTER** here once done."
 
