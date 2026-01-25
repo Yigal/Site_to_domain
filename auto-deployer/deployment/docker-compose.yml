@@ -1,0 +1,101 @@
+version: '3.8'
+
+services:
+  # Redis - Message broker and state backend
+  redis:
+    image: redis:7-alpine
+    container_name: auto-deployer-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    environment:
+      - REDIS_LOGLEVEL=warning
+    networks:
+      - auto-deployer-net
+
+  # FastAPI Web Server
+  api:
+    build:
+      context: ..
+      dockerfile: deployment/Dockerfile
+    container_name: auto-deployer-api
+    ports:
+      - "8000:8000"
+    environment:
+      - API_HOST=0.0.0.0
+      - API_PORT=8000
+      - REDIS_URL=redis://redis:6379
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/1
+      - DEBUG=false
+    depends_on:
+      redis:
+        condition: service_healthy
+    volumes:
+      - ../app:/app/app
+      - ../worker:/app/worker
+      - ../logs:/app/logs
+    networks:
+      - auto-deployer-net
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Celery Worker
+  worker:
+    build:
+      context: ..
+      dockerfile: deployment/Dockerfile
+    container_name: auto-deployer-worker
+    command: celery -A worker.celery_app worker --loglevel=info
+    environment:
+      - REDIS_URL=redis://redis:6379
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/1
+    depends_on:
+      redis:
+        condition: service_healthy
+    volumes:
+      - ../app:/app/app
+      - ../worker:/app/worker
+      - ../logs:/app/logs
+      - /tmp/auto-deployer:/tmp/auto-deployer
+    networks:
+      - auto-deployer-net
+
+  # Celery Beat (optional - for scheduled tasks)
+  beat:
+    build:
+      context: ..
+      dockerfile: deployment/Dockerfile
+    container_name: auto-deployer-beat
+    command: celery -A worker.celery_app beat --loglevel=info
+    environment:
+      - REDIS_URL=redis://redis:6379
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/1
+    depends_on:
+      redis:
+        condition: service_healthy
+    volumes:
+      - ../app:/app/app
+      - ../worker:/app/worker
+      - ../logs:/app/logs
+    networks:
+      - auto-deployer-net
+
+volumes:
+  redis_data:
+
+networks:
+  auto-deployer-net:
+    driver: bridge
