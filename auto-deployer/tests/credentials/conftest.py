@@ -98,17 +98,21 @@ def gcp_credentials():
     SKIPS test if credentials not available.
     """
     import json
+    import base64
 
-    service_account_json = os.getenv("GCP_SERVICE_ACCOUNT_JSON")
+    service_account_b64 = os.getenv("GCP_SERVICE_ACCOUNT")
     project_id = os.getenv("GCP_PROJECT_ID")
 
-    if not service_account_json or not project_id:
+    if not service_account_b64 or not project_id:
         pytest.skip("GCP credentials not configured in .env")
 
     try:
+        # Decode base64
+        service_account_json = base64.b64decode(service_account_b64).decode('utf-8')
+        # Parse JSON directly (handles multiline strings with embedded control chars)
         service_account_dict = json.loads(service_account_json)
-    except json.JSONDecodeError:
-        pytest.skip("GCP_SERVICE_ACCOUNT_JSON is not valid JSON")
+    except (json.JSONDecodeError, Exception):
+        pytest.skip("GCP_SERVICE_ACCOUNT is not valid base64-encoded JSON")
 
     return {
         "service_account": service_account_dict,
