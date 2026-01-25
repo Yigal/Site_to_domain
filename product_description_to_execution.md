@@ -1961,12 +1961,81 @@ Project 4+: 2-2.5 hours (mature process)
 
 ---
 
+## Appendix D: Configuration Guidelines & Best Practices
+
+### Cloud Resource Naming Conventions
+
+**S3 Bucket Names**:
+- For development/testing: Use descriptive names (e.g., `deployment-assets`, `react-to-app`)
+- Bucket name must be unique across AWS
+- Use lowercase alphanumeric characters and hyphens only
+- Avoid including sensitive identifiers in bucket names
+- Document your bucket name in `.env.example`
+
+**Example .env configuration**:
+```
+AWS_ACCESS_KEY_ID=your_access_key
+AWS_SECRET_ACCESS_KEY=your_secret_key
+S3_BUCKET=deployment-assets  # Change this to your S3 bucket name
+REDIS_URL=redis://localhost:6379
+GITHUB_TOKEN=your_github_token
+CLOUDFLARE_TOKEN=your_cloudflare_token
+GCP_SERVICE_ACCOUNT=base64_encoded_json
+```
+
+### Configuration Management Best Practices
+
+1. **Never Commit Credentials**
+   - Keep `.env` file in `.gitignore`
+   - Only commit `.env.example` with placeholder values
+   - Use AWS Secrets Manager for production credentials
+
+2. **Environment-Specific Settings**
+   - Development: Use local S3 bucket
+   - Staging: Use shared S3 bucket with `-staging` suffix
+   - Production: Use production S3 bucket with encryption
+
+3. **Cloud Provider Configurations**
+
+   **AWS**:
+   - S3 bucket: Unique name per environment
+   - Region: Consistent across all AWS resources
+   - Secrets Manager path: `prod/auto-deployer/keys`
+
+   **GitHub**:
+   - Organization: Required for creating repositories
+   - Fine-grained Personal Access Token with appropriate permissions
+   - Token expiration: Set to reasonable interval
+
+   **Cloudflare**:
+   - Account email: Admin account
+   - API token with appropriate zone permissions
+   - Test token before deployment
+
+   **GCP**:
+   - Service account JSON: Base64 encoded for .env storage
+   - Project ID: Consistent across all GCP operations
+   - Billing account: Must be linked for paid APIs
+   - Firebase: Enable required services (Authentication, Realtime Database)
+
+### Step 2 Configuration Details (Reference)
+
+When executing Step 2 (Configuration Layer Setup) in Part 6:
+- Verify all cloud credentials are valid before proceeding
+- Test AWS S3 bucket access with test file upload
+- Verify GitHub token with API call
+- Check Cloudflare account permissions
+- Validate GCP service account JSON formatting
+- Document any custom S3 bucket names used
+
+---
+
 ## Document Information
 
 **Created**: January 25, 2026
-**Version**: 1.0
+**Version**: 1.1 (Updated with configuration guidelines)
 **Status**: ✅ Complete and Ready for Reproduction
-**Total Content**: 14,000+ words covering complete project journey
+**Total Content**: 14,500+ words covering complete project journey with guidelines
 
 **To Use This Document**:
 1. Print or keep digital copy for reference during reproduction
