@@ -1,0 +1,533 @@
+{
+  "project_name": "Auto-Deployer: Automated Frontend Deployment Orchestration",
+  "version": "2.0",
+  "enhancement_version": "Improved with Post-Action Agents",
+  "total_steps": 15,
+  "total_estimated_duration_minutes": 390,
+  "total_estimated_duration_with_learning": 240,
+  "enhancement_date": "January 25, 2026",
+  "post_action_agents": [
+    {
+      "agent_name": "preaction-agent",
+      "phase": "BEFORE_EXECUTION",
+      "purpose": "Create detailed documentation of what will happen in each step",
+      "output_document": "steps_docs/STEP_X_PREACTION.md"
+    },
+    {
+      "agent_name": "agent-basa",
+      "phase": "BEFORE_EXECUTION",
+      "purpose": "Analyze risks and predict potential failures before execution",
+      "output_document": "steps_docs/STEP_X_RISKS.md"
+    },
+    {
+      "agent_name": "summary-agent",
+      "phase": "AFTER_EXECUTION",
+      "purpose": "Document actual execution and compare to plan",
+      "output_document": "steps_docs/STEP_X_SUMMARY.md"
+    },
+    {
+      "agent_name": "retro-agent",
+      "phase": "AFTER_EXECUTION",
+      "purpose": "Generate improvement recommendations and learning",
+      "output_document": "retro_docs/STEP_X_RETROSPECTIVE.md"
+    }
+  ],
+  "step_lifecycle": {
+    "phase_1_preaction": {
+      "description": "Preaction Agent creates detailed documentation",
+      "duration_minutes": 2,
+      "agent": "preaction-agent",
+      "outputs": ["steps_docs/STEP_X_PREACTION.md"]
+    },
+    "phase_2_risk_analysis": {
+      "description": "Agent BASA identifies risks and creates mitigation plans",
+      "duration_minutes": 2,
+      "agent": "agent-basa",
+      "outputs": ["steps_docs/STEP_X_RISKS.md", "steps_docs/STEP_X_CONTINGENCY.md"]
+    },
+    "phase_3_execution": {
+      "description": "Execute step with monitoring and logging",
+      "duration_minutes": "variable",
+      "logging": "steps_docs/STEP_X_EXECUTION.log",
+      "monitoring": "Real-time against baseline plan"
+    },
+    "phase_4_summary": {
+      "description": "Summary Agent documents actual vs planned",
+      "duration_minutes": 2,
+      "agent": "summary-agent",
+      "outputs": ["steps_docs/STEP_X_SUMMARY.md"]
+    },
+    "phase_5_retrospective": {
+      "description": "Retro Agent generates improvements",
+      "duration_minutes": 2,
+      "agent": "retro-agent",
+      "outputs": [
+        "retro_docs/STEP_X_RETROSPECTIVE.md",
+        "retro_docs/STEP_X_GUIDELINE_CHANGES.md",
+        "retro_docs/STEP_X_AGENT_REQUESTS.md",
+        "retro_docs/STEP_X_RESEARCH_NEEDS.md"
+      ]
+    }
+  },
+  "parallelization_blocks": [
+    {
+      "block_number": 1,
+      "steps": [1],
+      "type": "sequential",
+      "duration_minutes": 19,
+      "description": "Project scaffolding with post-action documentation"
+    },
+    {
+      "block_number": 2,
+      "steps": [2, 3],
+      "type": "sequential",
+      "duration_minutes": 54,
+      "description": "Configuration and models with post-action documentation"
+    },
+    {
+      "block_number": 3,
+      "steps": [4, 5, 6, 7],
+      "type": "parallel",
+      "duration_minutes": 43,
+      "description": "Service layer implementation (4 services running in parallel, each with post-action docs)"
+    },
+    {
+      "block_number": 4,
+      "steps": [8, 9, 10],
+      "type": "parallel",
+      "duration_minutes": 36,
+      "description": "Utilities implementation (3 utilities running in parallel, each with post-action docs)"
+    },
+    {
+      "block_number": 5,
+      "steps": [11, 12],
+      "type": "sequential",
+      "duration_minutes": 63,
+      "description": "Worker and API with post-action documentation"
+    },
+    {
+      "block_number": 6,
+      "steps": [13, 14],
+      "type": "sequential",
+      "duration_minutes": 73,
+      "description": "Testing with post-action documentation"
+    },
+    {
+      "block_number": 7,
+      "steps": [15],
+      "type": "sequential",
+      "duration_minutes": 64,
+      "description": "Deployment with post-action documentation"
+    }
+  ],
+  "learning_feedback_loop": {
+    "description": "Process improves with each step based on retrospective learning",
+    "savings_per_iteration": {
+      "steps_1_3": "Baseline - no prior learning",
+      "steps_4_7": "2-3 minutes per step saved",
+      "steps_8_10": "2-3 minutes per step saved",
+      "steps_11_15": "3-5 minutes per step saved"
+    },
+    "estimated_total_savings": "30-40 minutes",
+    "revised_total_time": "240-250 minutes (4-4.5 hours)"
+  },
+  "steps": [
+    {
+      "step_index": 1,
+      "step_name": "Project Initialization & Scaffolding",
+      "execution_type": "SEQUENTIAL",
+      "estimated_duration_minutes": 15,
+      "estimated_duration_with_agents": 19,
+      "risk_level": "LOW",
+      "critical_path": true,
+      "dependencies": [],
+      "step_goal": "Initialize the project structure, set up Python environment, create directory hierarchy, and prepare Docker configuration.",
+      "preaction_outputs": {
+        "document": "steps_docs/STEP_1_PREACTION.md",
+        "contents": [
+          "All 7 directories to be created",
+          "All 10+ files to be created",
+          "Python version checks",
+          "Expected outputs for each action",
+          "Success criteria"
+        ]
+      },
+      "agent_basa_risks": {
+        "document": "steps_docs/STEP_1_RISKS.md",
+        "critical_risks": [
+          {
+            "risk": "Python version < 3.10",
+            "severity": "CRITICAL",
+            "impact": "Blocks entire project",
+            "mitigation": "Check Python version before starting"
+          },
+          {
+            "risk": "Virtual environment creation fails",
+            "severity": "CRITICAL",
+            "impact": "Cannot install dependencies",
+            "mitigation": "Verify permissions and disk space"
+          },
+          {
+            "risk": "Git not installed",
+            "severity": "CRITICAL",
+            "impact": "Cannot initialize repository",
+            "mitigation": "Check git in PATH before starting"
+          },
+          {
+            "risk": "Insufficient disk space",
+            "severity": "HIGH",
+            "impact": "Installation fails mid-way",
+            "mitigation": "Verify 500MB+ available"
+          }
+        ]
+      },
+      "success_criteria": [
+        "All 7 directories created",
+        "Python version >= 3.10",
+        "Git repository initialized",
+        "Virtual environment working",
+        "All 20+ dependencies installed"
+      ],
+      "summary_validations": {
+        "document": "steps_docs/STEP_1_SUMMARY.md",
+        "validate": [
+          "Directory structure matches plan",
+          "Python version correct",
+          "Git initialized successfully",
+          "Venv activation works",
+          "All packages installed"
+        ]
+      },
+      "retrospective_opportunities": {
+        "document": "retro_docs/STEP_1_RETROSPECTIVE.md",
+        "learning_categories": [
+          "Guideline improvements needed",
+          "Agent/skill enhancement requests",
+          "Environmental knowledge gaps",
+          "Unpredictable issue handling"
+        ]
+      }
+    },
+    {
+      "step_index": 2,
+      "step_name": "Configuration Layer Setup",
+      "execution_type": "SEQUENTIAL",
+      "estimated_duration_minutes": 20,
+      "estimated_duration_with_agents": 24,
+      "risk_level": "LOW-MEDIUM",
+      "critical_path": true,
+      "dependencies": [1],
+      "step_goal": "Implement configuration management with AWS Secrets Manager integration.",
+      "preaction_outputs": {
+        "document": "steps_docs/STEP_2_PREACTION.md",
+        "contents": [
+          "config.py implementation details",
+          "Settings class structure",
+          "hydrate_secrets() function logic",
+          "Expected configuration output",
+          "AWS interaction steps"
+        ]
+      },
+      "agent_basa_risks": {
+        "document": "steps_docs/STEP_2_RISKS.md",
+        "critical_risks": [
+          {
+            "risk": "AWS credentials missing or invalid",
+            "severity": "CRITICAL",
+            "impact": "Cannot connect to AWS",
+            "mitigation": "Verify credentials before starting"
+          },
+          {
+            "risk": "Secrets Manager secret not found",
+            "severity": "CRITICAL",
+            "impact": "hydrate_secrets() fails",
+            "mitigation": "Create secret in AWS first"
+          },
+          {
+            "risk": "GCP credentials Base64 encoding invalid",
+            "severity": "HIGH",
+            "impact": "GCP operations fail",
+            "mitigation": "Validate Base64 encoding"
+          }
+        ]
+      },
+      "success_criteria": [
+        "Settings class loads correctly",
+        "hydrate_secrets() works",
+        "AWS connection verified",
+        "Secrets retrieved successfully",
+        "All tests pass"
+      ],
+      "summary_validations": {
+        "document": "steps_docs/STEP_2_SUMMARY.md",
+        "validate": [
+          "Config loads without errors",
+          "Secrets hydration works",
+          "No credentials in logs",
+          "GCP credentials properly decoded"
+        ]
+      }
+    },
+    {
+      "step_index": 3,
+      "step_name": "Data Models & Request Validation",
+      "execution_type": "SEQUENTIAL",
+      "estimated_duration_minutes": 25,
+      "estimated_duration_with_agents": 29,
+      "risk_level": "LOW",
+      "critical_path": true,
+      "dependencies": [2],
+      "step_goal": "Define Pydantic models for request/response validation.",
+      "preaction_outputs": {
+        "document": "steps_docs/STEP_3_PREACTION.md",
+        "contents": [
+          "All model definitions",
+          "Validation rules",
+          "Expected schema outputs"
+        ]
+      },
+      "agent_basa_risks": {
+        "document": "steps_docs/STEP_3_RISKS.md",
+        "critical_risks": [
+          {
+            "risk": "Invalid Pydantic syntax",
+            "severity": "MEDIUM",
+            "impact": "Models fail to import",
+            "mitigation": "Review Pydantic documentation"
+          }
+        ]
+      }
+    },
+    {
+      "step_index": 4,
+      "step_name": "AWS Storage Service Implementation",
+      "execution_type": "PARALLEL",
+      "estimated_duration_minutes": 30,
+      "estimated_duration_with_agents": 34,
+      "risk_level": "MEDIUM",
+      "critical_path": false,
+      "dependencies": [3],
+      "can_run_with": [5, 6, 7],
+      "step_goal": "Implement S3 file operations and Secrets Manager integration."
+    },
+    {
+      "step_index": 5,
+      "step_name": "GitHub Service Implementation",
+      "execution_type": "PARALLEL",
+      "estimated_duration_minutes": 30,
+      "estimated_duration_with_agents": 34,
+      "risk_level": "MEDIUM",
+      "critical_path": false,
+      "dependencies": [3],
+      "can_run_with": [4, 6, 7],
+      "step_goal": "Implement PyGithub-based repository management."
+    },
+    {
+      "step_index": 6,
+      "step_name": "Cloudflare Service Implementation",
+      "execution_type": "PARALLEL",
+      "estimated_duration_minutes": 30,
+      "estimated_duration_with_agents": 34,
+      "risk_level": "MEDIUM",
+      "critical_path": false,
+      "dependencies": [3],
+      "can_run_with": [4, 5, 7],
+      "step_goal": "Implement Cloudflare API v4 integration."
+    },
+    {
+      "step_index": 7,
+      "step_name": "GCP Service Implementation",
+      "execution_type": "PARALLEL",
+      "estimated_duration_minutes": 35,
+      "estimated_duration_with_agents": 39,
+      "risk_level": "MEDIUM-HIGH",
+      "critical_path": false,
+      "dependencies": [3],
+      "can_run_with": [4, 5, 6],
+      "step_goal": "Implement GCP project and Firebase management.",
+      "agent_basa_risks": {
+        "document": "steps_docs/STEP_7_RISKS.md",
+        "critical_risks": [
+          {
+            "risk": "GCP project creation takes 60+ seconds",
+            "severity": "MEDIUM",
+            "impact": "Step timing significantly impacted",
+            "mitigation": "Plan for timeout, use async"
+          },
+          {
+            "risk": "Billing role not at account level",
+            "severity": "CRITICAL",
+            "impact": "Billing linkage fails",
+            "mitigation": "Verify role placement before step"
+          }
+        ]
+      }
+    },
+    {
+      "step_index": 8,
+      "step_name": "Source Manager Service",
+      "execution_type": "PARALLEL",
+      "estimated_duration_minutes": 25,
+      "estimated_duration_with_agents": 29,
+      "risk_level": "MEDIUM",
+      "critical_path": false,
+      "dependencies": [3],
+      "can_run_with": [9, 10],
+      "step_goal": "Implement source code acquisition from Git or ZIP."
+    },
+    {
+      "step_index": 9,
+      "step_name": "AST Modifier Utility",
+      "execution_type": "PARALLEL",
+      "estimated_duration_minutes": 30,
+      "estimated_duration_with_agents": 34,
+      "risk_level": "MEDIUM",
+      "critical_path": false,
+      "dependencies": [3],
+      "can_run_with": [8, 10],
+      "step_goal": "Implement Tree-sitter code transformation."
+    },
+    {
+      "step_index": 10,
+      "step_name": "Saga Context Utility",
+      "execution_type": "PARALLEL",
+      "estimated_duration_minutes": 30,
+      "estimated_duration_with_agents": 34,
+      "risk_level": "MEDIUM",
+      "critical_path": false,
+      "dependencies": [3],
+      "can_run_with": [8, 9],
+      "step_goal": "Implement distributed transaction state management."
+    },
+    {
+      "step_index": 11,
+      "step_name": "Celery Worker Setup",
+      "execution_type": "SEQUENTIAL",
+      "estimated_duration_minutes": 25,
+      "estimated_duration_with_agents": 29,
+      "risk_level": "MEDIUM",
+      "critical_path": true,
+      "dependencies": [4, 5, 6, 7, 8, 9, 10],
+      "step_goal": "Configure Celery task queue with Redis broker.",
+      "agent_basa_risks": {
+        "document": "steps_docs/STEP_11_RISKS.md",
+        "critical_risks": [
+          {
+            "risk": "Redis not running",
+            "severity": "CRITICAL",
+            "impact": "Celery cannot start",
+            "mitigation": "Verify Redis running before step"
+          }
+        ]
+      }
+    },
+    {
+      "step_index": 12,
+      "step_name": "FastAPI Application Setup",
+      "execution_type": "SEQUENTIAL",
+      "estimated_duration_minutes": 30,
+      "estimated_duration_with_agents": 34,
+      "risk_level": "MEDIUM",
+      "critical_path": true,
+      "dependencies": [2, 11],
+      "step_goal": "Implement FastAPI application with endpoints."
+    },
+    {
+      "step_index": 13,
+      "step_name": "Validation Test Suite",
+      "execution_type": "SEQUENTIAL",
+      "estimated_duration_minutes": 20,
+      "estimated_duration_with_agents": 24,
+      "risk_level": "LOW",
+      "critical_path": true,
+      "dependencies": [12],
+      "step_goal": "Implement pre-run validation tests."
+    },
+    {
+      "step_index": 14,
+      "step_name": "Integration Testing",
+      "execution_type": "SEQUENTIAL",
+      "estimated_duration_minutes": 45,
+      "estimated_duration_with_agents": 49,
+      "risk_level": "MEDIUM",
+      "critical_path": true,
+      "dependencies": [13],
+      "step_goal": "Run end-to-end integration tests."
+    },
+    {
+      "step_index": 15,
+      "step_name": "Production Deployment",
+      "execution_type": "SEQUENTIAL",
+      "estimated_duration_minutes": 60,
+      "estimated_duration_with_agents": 64,
+      "risk_level": "MEDIUM-HIGH",
+      "critical_path": true,
+      "dependencies": [14],
+      "step_goal": "Package and deploy application to production."
+    }
+  ],
+  "document_structure": {
+    "steps_docs": {
+      "description": "Step-by-step documentation organized by step number",
+      "folders": "STEP_1, STEP_2, ..., STEP_15",
+      "files_per_step": [
+        "STEP_X_PREACTION.md (from preaction-agent)",
+        "STEP_X_RISKS.md (from agent-basa)",
+        "STEP_X_EXECUTION.log (raw execution logs)",
+        "STEP_X_SUMMARY.md (from summary-agent)",
+        "STEP_X_CONTINGENCY.md (fallback plans)"
+      ]
+    },
+    "retro_docs": {
+      "description": "Retrospective and learning documentation",
+      "files": [
+        "STEP_X_RETROSPECTIVE.md (from retro-agent)",
+        "STEP_X_GUIDELINE_CHANGES.md (improvements to plan)",
+        "STEP_X_AGENT_REQUESTS.md (agent/skill enhancement requests)",
+        "STEP_X_RESEARCH_NEEDS.md (knowledge gaps to investigate)",
+        "LESSON_LEARNED_DATABASE.md (cumulative learning)"
+      ]
+    }
+  },
+  "success_metrics": {
+    "preaction_agent": [
+      "All steps have complete preaction documentation",
+      "Preaction documents match actual scope 95%+",
+      "Team alignment before step begins"
+    ],
+    "agent_basa": [
+      "80%+ of actual issues were predicted",
+      "Contingency plans prove effective",
+      "Early warning indicators prevent surprises"
+    ],
+    "summary_agent": [
+      "Actual time within ±15% of plan",
+      "All success criteria met or documented",
+      "Clear deviation analysis"
+    ],
+    "retro_agent": [
+      "3+ actionable improvements per step",
+      "Guidelines improved after each step",
+      "Process faster with each iteration"
+    ]
+  },
+  "improvements_over_original_plan": [
+    "Added 4-phase step lifecycle (Preaction, BASA, Execute, Summary, Retro)",
+    "Added comprehensive risk analysis before execution",
+    "Added detailed documentation output for each step",
+    "Added learning feedback loop with estimated 30-40 minute savings",
+    "Added success metrics for each agent type",
+    "Added contingency planning before execution",
+    "Added cross-step learning and continuous improvement",
+    "Revised total time from 6.5 hours to 4-4.5 hours with learning"
+  ],
+  "critical_success_factors": [
+    "Execute preaction agent before each step begins",
+    "Execute agent BASA risk analysis before execution",
+    "Monitor execution against baseline plan",
+    "Complete summary agent after execution",
+    "Complete retro agent to capture learning",
+    "Update EXECUTION_PLAN based on learnings",
+    "Apply learnings to subsequent steps"
+  ]
+}
